@@ -1,0 +1,6 @@
+### Java template
+*.class
+target/
+logs/
+.idea/
+*.iml
