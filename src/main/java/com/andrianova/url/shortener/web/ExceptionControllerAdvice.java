@@ -1,4 +1,4 @@
-package com.example.url.shortener.controller;
+package com.andrianova.url.shortener.web;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

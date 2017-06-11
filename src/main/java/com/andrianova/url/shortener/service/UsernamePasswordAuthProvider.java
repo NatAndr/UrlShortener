@@ -1,23 +1,22 @@
-package com.example.url.shortener.service;
+package com.andrianova.url.shortener.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
  * Created by natal on 30-May-17.
  */
 public class UsernamePasswordAuthProvider implements AuthenticationProvider {
 
-    private PasswordEncoder passwordEncoder;
     private UserDetailsService userDetailsService;
 
-    public UsernamePasswordAuthProvider(PasswordEncoder passwordEncoder, UserDetailsService userDetailsService) {
-        this.passwordEncoder = passwordEncoder;
+    @Autowired
+    public UsernamePasswordAuthProvider(UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
 
@@ -35,10 +34,10 @@ public class UsernamePasswordAuthProvider implements AuthenticationProvider {
         if (!tokenPassword.equals(password)) {
             throw new BadCredentialsException("Invalid username/password");
         }
-        if (!user.isAccountNonLocked()){
+        if (!user.isAccountNonLocked()) {
             throw new LockedException("User is locked");
         }
-        if (!user.isCredentialsNonExpired()){
+        if (!user.isCredentialsNonExpired()) {
             throw new CredentialsExpiredException("User credentials are expired");
         }
         return new UsernamePasswordAuthenticationToken(user, password, user.getAuthorities());

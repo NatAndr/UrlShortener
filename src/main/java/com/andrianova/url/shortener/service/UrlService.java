@@ -1,7 +1,7 @@
-package com.example.url.shortener.service;
+package com.andrianova.url.shortener.service;
 
-import com.example.url.shortener.model.RegisteredUrl;
-import com.example.url.shortener.model.ShortUrlResponse;
+import com.andrianova.url.shortener.model.RegisteredUrl;
+import com.andrianova.url.shortener.model.ShortUrlResponse;
 import com.google.common.hash.Hashing;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,16 +26,16 @@ public class UrlService {
     private String hostName;
 
     //    urlHash : url
-    private Map<String, RegisteredUrl> urls = new ConcurrentHashMap<>();
+    private final Map<String, RegisteredUrl> urls = new ConcurrentHashMap<>();
 
     //  accountId : urls list
-    private Map<String, List<String>> accountIdToUrlMap = new ConcurrentHashMap<>();
+    private final Map<String, List<String>> accountIdToUrlMap = new ConcurrentHashMap<>();
 
     //    url : count
-    private Map<String, Integer> statistics = new ConcurrentHashMap<>();
+    private final Map<String, Integer> statistics = new ConcurrentHashMap<>();
 
     public ShortUrlResponse registerUrl(RegisteredUrl registeredUrl, String accountId) {
-        LOG.info("registerUrl");
+        LOG.debug("registerUrl");
         final String url = registeredUrl.getUrl();
         final String urlHash = getHash(url);
         urls.put(urlHash, registeredUrl);
@@ -50,7 +50,7 @@ public class UrlService {
     }
 
     public RegisteredUrl getUrl(String shortUrl) {
-        LOG.info("getUrl: " + shortUrl);
+        LOG.debug("getUrl: " + shortUrl);
         final RegisteredUrl registeredUrl = urls.get(shortUrl);
         if (registeredUrl != null) {
             final String url = registeredUrl.getUrl();
@@ -64,7 +64,7 @@ public class UrlService {
     }
 
     public Object getStatistic(String accountId) {
-        LOG.info("getStatistic");
+        LOG.debug("getStatistic");
         Map<String, Integer> result = new ConcurrentHashMap<>();
         if (accountIdToUrlMap.isEmpty()) {
             return result;

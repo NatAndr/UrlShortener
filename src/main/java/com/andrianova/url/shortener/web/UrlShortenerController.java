@@ -1,23 +1,16 @@
-package com.example.url.shortener.controller;
+package com.andrianova.url.shortener.web;
 
-import com.example.url.shortener.model.AccountResponse;
-import com.example.url.shortener.model.RegisteredUrl;
-import com.example.url.shortener.model.ShortUrlResponse;
-import com.example.url.shortener.service.AccountService;
-import com.example.url.shortener.service.OauthService;
-import com.example.url.shortener.service.UrlService;
+import com.andrianova.url.shortener.model.*;
+import com.andrianova.url.shortener.service.AccountService;
+import com.andrianova.url.shortener.service.UrlService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
-import java.security.Principal;
-import java.util.*;
+import java.util.List;
 
 
 /**
@@ -33,28 +26,21 @@ public class UrlShortenerController {
     @Autowired
     private UrlService urlService;
 
-    @Autowired
-    private OauthService oauthService;
-
-//    @Resource(name="tokenStore")
-//    private TokenStore tokenStore;
-
-//    @Autowired
-//    private DefaultTokenServices tokenServices;
-//    @Autowired
-//    private TokenEndpoint tokenEndpoint;
-//
-//    @Autowired
-//    AuthenticationManager authenticationManager;
-
     @RequestMapping(value = "/account", method = RequestMethod.POST,
             produces = "application/json",
             consumes = "application/json")
-    public ResponseEntity addAccount(@RequestBody String accountId) {
+    public ResponseEntity addAccount(@RequestBody AccountRequest accountRequest) {
         Long start = System.currentTimeMillis();
-        AccountResponse accountResponse = accountService.addAccount(accountId);
+        AccountResponse accountResponse = accountService.addAccount(accountRequest.getAccountId());
         LOG.info(String.format("Add account, elapsed [%s] ms", (System.currentTimeMillis() - start)));
         return new ResponseEntity<>(accountResponse, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/accounts", method = RequestMethod.GET,
+            produces = "application/json",
+            consumes = "application/json")
+    public List<Account> getAccounts() {
+        return accountService.getAccounts();
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST,
@@ -84,47 +70,8 @@ public class UrlShortenerController {
             produces = {"application/json"})
     public ResponseEntity getStatistic(@PathVariable String accountId) {
         Long start = System.currentTimeMillis();
-//        String statistic = urlService.getStatistic(accountId);
         Object statistic = urlService.getStatistic(accountId);
         LOG.info(String.format("Get statistic, elapsed [%s] ms", (System.currentTimeMillis() - start)));
         return new ResponseEntity<>(statistic, HttpStatus.OK);
-    }
-
-    @RequestMapping(value = "/test", method = RequestMethod.GET)
-    public Object read(OAuth2Authentication auth) {
-        //auth.getAuthorizationRequest().getClientId()
-        return auth.getCredentials();
-    }
-
-    @RequestMapping(value = "/test2", method = RequestMethod.GET)
-    public Object read2(OAuth2Authentication auth, @RequestHeader(value="Authorization") String authorizationHeader,
-                        Principal currentUser) {
-        //auth.getAuthorizationRequest().getClientId()
-//        Object credentials = auth.getCredentials();
-//        Object principal = auth.getPrincipal();
-        String token2 = oauthService.getToken2();
-        return token2;
-    }
-
-
-    public int test() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-
-        Set<String> nameSet = new TreeSet<>(Arrays.asList("Mr.Green", "Mr.Yellow", "Mr.Red"));
-        nameSet.forEach(System.out::println);
-
-        Map<String, Integer> map = new TreeMap<>();
-        map.put("Gamma", 3);
-        map.put("Omega", 24);
-        map.put("Alpha", 1);
-
-        for (Map.Entry<String, Integer> m : map.entrySet()) {
-            System.out.println(m.getKey() + "=" + m.getValue());
-        }
-        Scanner in = new Scanner(System.in);
-        int v = in.nextInt();
-        int t = in.nextInt();
-        return Math.abs(Math.abs(v) * t - 109);
     }
 }

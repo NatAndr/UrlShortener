@@ -1,4 +1,4 @@
-package com.example.url.shortener.controller;
+package com.andrianova.url.shortener.web;
 
 /**
  * Created by natal on 26-Apr-17.

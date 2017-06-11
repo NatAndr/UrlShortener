@@ -1,4 +1,4 @@
-package com.example.url.shortener.model;
+package com.andrianova.url.shortener.model;
 
 /**
  * Created by natal on 25-May-17.

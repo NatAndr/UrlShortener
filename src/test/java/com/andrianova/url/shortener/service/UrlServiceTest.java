@@ -1,4 +1,4 @@
-package com.example.url.shortener.service;
+package com.andrianova.url.shortener.service;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

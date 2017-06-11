@@ -1,4 +1,4 @@
-package com.example.url.shortener;
+package com.andrianova.url.shortener;
 
 import java.security.SecureRandom;
 import java.util.Random;
