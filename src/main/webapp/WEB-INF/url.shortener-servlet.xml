@@ -15,9 +15,7 @@
 
     <mvc:annotation-driven/>
 
-    <!--<mvc:view-web path="/" view-name="send"/>-->
-
-    <mvc:resources mapping="/resources/**" location="/resources/"/>
+    <mvc:resources mapping="/static/**" location="/static/"/>
 
     <tx:annotation-driven proxy-target-class="true"/>
 

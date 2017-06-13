@@ -34,6 +34,25 @@ public class UrlService {
     //    url : count
     private final Map<String, Integer> statistics = new ConcurrentHashMap<>();
 
+    public Map<String, RegisteredUrl> getUrls() {
+        return urls;
+    }
+
+    public Map<String, List<String>> getAccountIdToUrlMap() {
+        return accountIdToUrlMap;
+    }
+
+    public Map<String, Integer> getStatistics() {
+        return statistics;
+    }
+
+    /**
+     * Register url. Add url to map: key = accountId, value = List<url>
+     *
+     * @param registeredUrl url to be registered
+     * @param accountId
+     * @return ShortUrlResponse
+     */
     public ShortUrlResponse registerUrl(RegisteredUrl registeredUrl, String accountId) {
         LOG.debug("registerUrl");
         final String url = registeredUrl.getUrl();
@@ -49,6 +68,12 @@ public class UrlService {
         return new ShortUrlResponse(hostName + "/" + urlHash);
     }
 
+    /**
+     * Get real url by url hash
+     *
+     * @param shortUrl = url hash
+     * @return RegisteredUrl
+     */
     public RegisteredUrl getUrl(String shortUrl) {
         LOG.debug("getUrl: " + shortUrl);
         final RegisteredUrl registeredUrl = urls.get(shortUrl);
@@ -63,7 +88,13 @@ public class UrlService {
         return registeredUrl;
     }
 
-    public Object getStatistic(String accountId) {
+    /**
+     * Get statistic by accountId. It contains urls and redirected number
+     *
+     * @param accountId
+     * @return Map<url, count>
+     */
+    public Map<String, Integer> getStatistic(String accountId) {
         LOG.debug("getStatistic");
         Map<String, Integer> result = new ConcurrentHashMap<>();
         if (accountIdToUrlMap.isEmpty()) {
@@ -78,6 +109,12 @@ public class UrlService {
         return result;
     }
 
+    /**
+     * Get short url by real one
+     *
+     * @param url to be hashed
+     * @return string hash
+     */
     private String getHash(String url) {
         return Hashing.murmur3_32().hashString(url, StandardCharsets.UTF_8).toString();
     }

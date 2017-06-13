@@ -9,6 +9,10 @@ public class AccountRequest {
     public AccountRequest() {
     }
 
+    public AccountRequest(String accountId) {
+        this.accountId = accountId;
+    }
+
     public String getAccountId() {
         return accountId;
     }

@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Created by natal on 24-May-17.
@@ -24,12 +23,7 @@ public class AccountService {
     private static final String SUCCESS_DESCRIPTION = "Your account is opened";
     private static final String FAILED_DESCRIPTION = "Account with that ID already exists";
 
-    //    @Autowired
-//    private PasswordEncoder passwordEncoder;
     private final AccountRepository<Account> repository;
-
-    //    id: Account
-//    private final Map<String, Account> accounts = new ConcurrentHashMap<>();
 
     @Autowired
     public AccountService(AccountRepository<Account> repository) {
@@ -51,10 +45,7 @@ public class AccountService {
             account = new Account();
             account.setLogin(login);
             String password = Utils.randomString(PASSWORD_LENGTH);
-//            String password = passwordEncoder.encode("123");
-//            String password = "123";
             account.setPassword(password);
-//            this.accounts.put(id, account);
             try {
                 this.repository.insert(account);
             } catch (DaoException e) {

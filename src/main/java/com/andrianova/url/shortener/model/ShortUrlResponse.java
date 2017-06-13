@@ -6,6 +6,9 @@ package com.andrianova.url.shortener.model;
 public class ShortUrlResponse {
     private String shortUrl;
 
+    public ShortUrlResponse() {
+    }
+
     public ShortUrlResponse(String shortUrl) {
         this.shortUrl = shortUrl;
     }

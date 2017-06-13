@@ -22,6 +22,12 @@ public class Account {
     public Account() {
     }
 
+    public Account(int id, String password, String login) {
+        this.id = id;
+        this.password = password;
+        this.login = login;
+    }
+
     public int getId() {
         return id;
     }

@@ -5,9 +5,18 @@ package com.andrianova.url.shortener.model;
  */
 public class RegisteredUrl {
     private String url;
-    private String redirectType;
+    private Integer redirectType;
 
     public RegisteredUrl() {
+    }
+
+    public RegisteredUrl(String url) {
+        this.url = url;
+    }
+
+    public RegisteredUrl(String url, Integer redirectType) {
+        this(url);
+        this.redirectType = redirectType;
     }
 
     public String getUrl() {
@@ -18,11 +27,19 @@ public class RegisteredUrl {
         this.url = url;
     }
 
-    public String getRedirectType() {
+    public Integer getRedirectType() {
         return redirectType;
     }
 
-    public void setRedirectType(String redirectType) {
+    public void setRedirectType(Integer redirectType) {
         this.redirectType = redirectType;
+    }
+
+    @Override
+    public String toString() {
+        return "RegisteredUrl{" +
+                "url='" + url + '\'' +
+                ", redirectType='" + redirectType + '\'' +
+                '}';
     }
 }

@@ -8,6 +8,19 @@ public class AccountResponse {
     private String description;
     private String password;
 
+    public AccountResponse() {
+    }
+
+    public AccountResponse(boolean success, String description) {
+        this.success = success;
+        this.description = description;
+    }
+
+    public AccountResponse(boolean success, String description, String password) {
+        this(success, description);
+        this.password = password;
+    }
+
     public boolean isSuccess() {
         return success;
     }
