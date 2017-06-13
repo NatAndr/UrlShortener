@@ -5,7 +5,121 @@
     <title>Help</title>
 </head>
 <body>
-<h2>This is a help</h2>
+<h2>URL shortener</h2>
+<h3>Installation</h3>
+<ul>
+    <li>Clone repository using Git:</li>
+    <code>git clone https://github.com/NatAndr/UrlShortener.git</code>
+</ul>
+<h3>Launching</h3>
+<ul>
+    <li>From the same directory as project root pom.xml, run:</li>
+    <code>mvn jetty:run</code>
+</ul>
+<h3>Usage</h3>
+<ol>
+    <li>Opening of accounts</li>
+    <table border="1" cellpadding="5" cellspacing="0" ><caption>Request</caption>
+        <tbody>
+        <tr>
+            <td>HTTP method</td>
+            <td>POST</td>
+        </tr>
+        <tr>
+            <td>URI</td>
+            <td>/account</td>
+        </tr>
+        <tr>
+            <td>Request type</td>
+            <td>application/json</td>
+        </tr>
+        <tr>
+            <td>Request Body</td>
+            <td>{ "accountId" : "your account Id here"}</td>
+        </tr>
+        <tr>
+            <td>Reponse Type</td>
+            <td>application/json</td>
+        </tr>
+        <tr>
+            <td>Reponse</td>
+            <td>The server responds with a JSON object: response status, description and <br>password</td>
+        </tr>
+        </tbody>
+    </table><br>
+    <li>Registration of URLs</li>
+    <ul>
+        <li>Before registration of URL you should get authentication token.</li>
+        <li>First, get refresh token:</li>
+        <code>/oauth/token?grant_type=password&client_id=my-trusted-client&username="your account Id
+            here"&password="your password here"</code>
+        <li>Then get access token by refresh token:</li>
+        <code>/oauth/token?client_id=my-trusted-client&grant_type=refresh_token&refresh_token="your refresh token
+            here"</code>
+        <li>Now register URL</li><br>
+    </ul>
+        <table border="1" cellpadding="5" cellspacing="0"><caption>Request</caption>
+            <tbody>
+            <tr>
+                <td>HTTP method</td>
+                <td>POST</td>
+            </tr>
+            <tr>
+                <td>URI</td>
+                <td>/register?access_token="your access token here"</td>
+            </tr>
+            <tr>
+                <td>Request type</td>
+                <td>application/json</td>
+            </tr>
+            <tr>
+                <td>Request Body</td>
+                <td>{"url": "your URI here",
+                    "redirectType": "redirected type here, optional"}</td>
+            </tr>
+            <tr>
+                <td>Reponse Type</td>
+                <td>application/json</td>
+            </tr>
+            <tr>
+                <td>Reponse</td>
+                <td>The server responds with a JSON object: short URI, <br>for example {"shortUrl": "http://localhost:8181/c4b601e6"}</td>
+            </tr>
+            </tbody>
+        </table>
+        <br>Once access token has expired, you can get the new one by providing refresh token:<br>
+        <code>/oauth/token?client_id=my-trusted-client&grant_type=refresh_token&refresh_token="your refresh token
+            here"</code><br><br>
+
+    <li>Retrieval of statistics</li><br>
+    <table border="1" cellpadding="5" cellspacing="0"><caption>Request</caption>
+        <tbody>
+        <tr>
+            <td>HTTP method</td>
+            <td>GET</td>
+        </tr>
+        <tr>
+            <td>URI</td>
+            <td>/statistic/{AccountId}?access_token="your access token here"</td>
+        </tr>
+        <tr>
+            <td>Reponse Type</td>
+            <td>application/json</td>
+        </tr>
+        <tr>
+            <td>Reponse</td>
+            <td>The server responds with a JSON object, key:value map, where the key <br>is the registered URL,
+                and the value is the number of this URL redirects</td>
+        </tr>
+        </tbody>
+    </table><br>
+
+    <li>Redirecting</li>
+    <ul>
+        <li>Every time the short URL is clicked this service do redirection on the configured address with the configured http status</li>
+    </ul>
+</ol>
+
 
 </body>
 </html>
