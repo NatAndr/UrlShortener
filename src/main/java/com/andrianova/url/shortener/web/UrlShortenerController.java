@@ -65,7 +65,7 @@ public class UrlShortenerController {
             return new ResponseEntity<>(statistic, HttpStatus.OK);
         } else {
             LOG.error(String.format("AccountId [%s], loggedUsername [%s]", accountId, loggedUsername));
-            throw new RuntimeException("Provided accountId doesn't match to credentials");
+            throw new RuntimeException("Provided accountId doesn't match to request credentials");
         }
     }
 }
