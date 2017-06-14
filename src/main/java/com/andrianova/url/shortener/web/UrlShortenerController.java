@@ -42,6 +42,7 @@ public class UrlShortenerController {
     public void redirect(@PathVariable String shortUrl, HttpServletResponse response) throws Exception {
         final RegisteredUrl registeredUrl = urlService.getUrl(shortUrl);
         if (registeredUrl != null) {
+            LOG.info(String.format("Redirect: short URL [%s] to [%s]", shortUrl, registeredUrl.getUrl()));
             response.addHeader("Location", registeredUrl.getUrl());
             final int redirectType = registeredUrl.getRedirectType() != null ?
                     registeredUrl.getRedirectType() : DEFAULT_STATUS;
