@@ -13,6 +13,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -26,7 +27,7 @@ public class UrlService {
     private String hostName;
 
     //    urlHash : url
-    private final Map<String, RegisteredUrl> urls = new ConcurrentHashMap<>();
+    private final ConcurrentMap<String, RegisteredUrl> urls = new ConcurrentHashMap<>();
 
     //  accountId : urls list
     private final Map<String, List<String>> accountIdToUrlMap = new ConcurrentHashMap<>();
@@ -57,7 +58,7 @@ public class UrlService {
         LOG.debug("registerUrl");
         final String url = registeredUrl.getUrl();
         final String urlHash = getHash(url);
-        urls.put(urlHash, registeredUrl);
+        urls.putIfAbsent(urlHash, registeredUrl);
         if (accountIdToUrlMap.containsKey(accountId)) {
             List<String> urlList = accountIdToUrlMap.get(accountId);
             urlList.add(url);

@@ -11,7 +11,7 @@ public interface AccountRepository<T> {
 
     List<T> getAll();
 
-    void insert(T entity) throws DaoException;
+    void insert(T entity);
 
     T getByLogin(String login);
 }

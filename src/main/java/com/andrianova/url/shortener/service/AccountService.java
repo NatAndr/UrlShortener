@@ -46,12 +46,12 @@ public class AccountService {
             account.setLogin(login);
             String password = Utils.randomString(PASSWORD_LENGTH);
             account.setPassword(password);
-            try {
+//            try {
                 this.repository.insert(account);
-            } catch (DaoException e) {
-                LOG.error("Error: " + e.getLocalizedMessage());
-                throw new RuntimeException(e.getLocalizedMessage());
-            }
+//            } catch (DaoException e) {
+//                LOG.error("Error: " + e.getLocalizedMessage());
+//                throw new RuntimeException(e.getLocalizedMessage());
+//            }
             accountResponse.setSuccess(true);
             accountResponse.setDescription(SUCCESS_DESCRIPTION);
             accountResponse.setPassword(password);
